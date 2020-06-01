@@ -31,4 +31,4 @@ sub validated {
 	$self;
 }
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';

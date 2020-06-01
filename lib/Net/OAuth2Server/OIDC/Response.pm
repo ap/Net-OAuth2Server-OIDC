@@ -52,4 +52,4 @@ sub add_id_token {
 	$self->add_token( id_token => JSON::WebToken->encode( $pay, $key, $alg, $head ) );
 }
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';

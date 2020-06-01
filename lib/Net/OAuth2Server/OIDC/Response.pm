@@ -7,6 +7,14 @@ use JSON::WebToken ();
 use Digest::SHA ();
 use Carp ();
 
+# copy-paste from newer MIME::Base64 for older versions without it
+my $b64url_enc = MIME::Base64->can( 'encode_base64url' ) || sub {
+	my $e = MIME::Base64::encode_base64( shift, '' );
+	$e =~ s/=+\z//;
+	$e =~ tr[+/][-_];
+	return $e;
+};
+
 sub supported_response_types { qw( code id_token token ) }
 
 sub for_authorization {
@@ -38,7 +46,7 @@ sub add_id_token {
 		my $sha = Digest::SHA->new( "$1" );
 		while ( my ( $k, $k_hash ) = each %hashed ) {
 			my $digest = exists $p->{ $k } ? $sha->reset->add( $p->{ $k } )->digest : next;
-			$pay->{ $k_hash } = MIME::Base64::encode_base64url substr $digest, 0, length( $digest ) / 2;
+			$pay->{ $k_hash } = $b64url_enc->( substr $digest, 0, length( $digest ) / 2 );
 		}
 	}
 	$self->add_token( id_token => JSON::WebToken->encode( $pay, $key, $alg, $head ) );

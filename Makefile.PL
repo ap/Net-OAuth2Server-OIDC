@@ -14,8 +14,8 @@ my %META = (
 			Digest::SHA             0
 			JSON::WebToken          0
 			MIME::Base64            0
-			Net::OAuth2Server   0.003
-			parent                  0
+			Role::Tiny                   0
+			Class::Method::Modifiers     0
 		)} },
 	},
 	dynamic_config => 0,

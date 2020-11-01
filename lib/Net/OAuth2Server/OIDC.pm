@@ -18,7 +18,7 @@ sub valid_parameter_values { (
 sub validated {
 	my $self = shift;
 	if ( $self->scope->contains( 'openid' ) ) {
-		return $self->with_error_invalid_request( 'missing parameter: nonce' )
+		return $self->set_error_invalid_request( 'missing parameter: nonce' )
 			if ( not defined $self->param('nonce') )
 			and $self->response_type->contains( $self->response_type_requiring_nonce );
 
@@ -28,10 +28,10 @@ sub validated {
 			my $value = $self->param( $name );
 			defined $value and not grep $value eq $_, @{ $validate{ $name } };
 		} keys %validate;
-		return $self->with_error_invalid_request( "invalid value for parameter: @invalid" ) if @invalid;
+		return $self->set_error_invalid_request( "invalid value for parameter: @invalid" ) if @invalid;
 	}
 	else {
-		return $self->with_error_invalid_request( 'id_token requested outside of openid scope' )
+		return $self->set_error_invalid_request( 'id_token requested outside of openid scope' )
 			if $self->response_type->contains( 'id_token' );
 	}
 	$self;

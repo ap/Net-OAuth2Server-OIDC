@@ -1,5 +1,8 @@
 Revision history for Net-OAuth2Server-OIDC
 
+0.003 Sub 01 Nov 2020
+	- Switch to role-based design
+
 0.002 Mon 01 Jun 2020
 	- Compatibility with old MIME::Base64 versions
 
